@@ -1,0 +1,22 @@
+Laravel Deployment on RunCloud – Quick Guide
+
+1. Create a new GitHub repository (leave it empty).
+2. Import official Laravel Git into your repository.
+3. In RunCloud → Create Web App → select Git Deployment.
+4. Enter your GitHub repository URL → select branch 11.x.
+5. Save → Go to Deployment Script → click Deploy Now.
+6. Create Database User → then Create Database → assign the DB user.
+7. Add .env file with DB credentials.
+8. SSH into server and run:
+   composer install --no-interaction --prefer-dist --optimize-autoloader
+   php artisan key:generate
+   php artisan migrate --force
+   php artisan config:cache
+   php artisan optimize:clear
+9. Fix permissions:
+   chmod -R 775 storage bootstrap/cache
+   chown -R www-data:www-data storage bootstrap/cache
+10. Set Public Path in RunCloud:
+    /home/.../webapps/<app-name>/public
+11. Change PHP version of Web App to 8.2.
+12. Visit URL — Laravel Welcome Page should load successfully.
